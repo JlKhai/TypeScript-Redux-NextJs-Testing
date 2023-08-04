@@ -38,8 +38,11 @@ export const authSlice = createSlice({
         },
       };
     },
+    toggleModerator: (state) => {
+      state.value.isModerator = !state.value.isModerator;
+    },
   },
 });
 
-export const { logOut, logIn } = authSlice.actions;
+export const { logOut, logIn, toggleModerator } = authSlice.actions;
 export default authSlice.reducer;

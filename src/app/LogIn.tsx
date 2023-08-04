@@ -1,12 +1,25 @@
 "use client";
 
+import { logIn, logOut, toggleModerator } from "@/redux/feature/authSlice";
+import { AppDispatch, useAppSelector } from "@/redux/store";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 
-export default function logIn() {
+export default function LogIn() {
   const [userName, setUserName] = useState("");
-  const onClickLogIn = () => {};
-  const onClickLogOut = () => {};
-  const onClickToggle = () => {};
+
+  const dispatch = useDispatch<AppDispatch>();
+  const isAuth = useAppSelector((state) => state.authReducer.value.isAuth);
+
+  const onClickLogIn = () => {
+    dispatch(logIn(userName));
+  };
+  const onClickLogOut = () => {
+    dispatch(logOut());
+  };
+  const onClickToggle = () => {
+    dispatch(toggleModerator());
+  };
   return (
     <div className=" flex flex-col gap-2">
       <input
@@ -26,12 +39,15 @@ export default function logIn() {
       >
         LogOut
       </button>
-      <button
-        onClick={onClickToggle}
-        className="px-4 py-2 rounded-full bg-teal-600 text-white"
-      >
-        Toggle Moderator
-      </button>
+
+      {isAuth && (
+        <button
+          onClick={onClickToggle}
+          className="px-4 py-2 rounded-full bg-teal-600 text-white"
+        >
+          Toggle Moderator
+        </button>
+      )}
     </div>
   );
 }
